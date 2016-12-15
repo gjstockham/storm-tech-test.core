@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <a asp-controller="Card" asp-action="Details" asp-id="@Model.Id"><img class="img-responsive img-thumbnail" src="@Model.ImageUrl" alt="@Model.Name" title="@Model.Name" /></a>        
+        <a asp-controller="Card" asp-action="Details" asp-route-id="@Model.Id"><img class="img-responsive img-thumbnail" src="@Model.ImageUrl" alt="@Model.Name" title="@Model.Name" /></a>        
     </div>
     <div class="col-md-12 text-center">
         <span class="label label-default">@Model.PlayerClassText</span>
