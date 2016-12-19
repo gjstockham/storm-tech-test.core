@@ -7,16 +7,16 @@ namespace Storm.InterviewTest.Hearthstone.Core.Queries
 {
 	public class SearchCardsQuery : CardListLinqQueryObject<ICard>
 	{
-		private readonly string _q;
+		public string Q { get; protected set; }
 
 		public SearchCardsQuery(string q)
 		{
-			_q = q ?? string.Empty;
+			Q = q ?? string.Empty;
 		}
 
 		protected override IEnumerable<ICard> ExecuteLinq(IQueryable<ICard> queryOver)
 		{
-			return queryOver.Where(x => x.Name.Contains(_q) || x.Type.ToString() == _q || x.PlayerClass == _q);
+			return queryOver.Where(x => x.Name.Contains(Q) || x.Type.ToString() == Q || x.PlayerClass == Q);
 		}
 	}
 }
