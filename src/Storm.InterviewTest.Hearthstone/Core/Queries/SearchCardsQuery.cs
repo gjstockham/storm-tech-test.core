@@ -29,6 +29,8 @@ namespace Storm.InterviewTest.Hearthstone.Core.Queries
 		        query = query.Where(x => x.PlayerClass == PlayerClass);
 		    }
 
+		    query = query.Where(x => x.GetType() != typeof(HeroCard));
+
 		    return query;
 		}
 

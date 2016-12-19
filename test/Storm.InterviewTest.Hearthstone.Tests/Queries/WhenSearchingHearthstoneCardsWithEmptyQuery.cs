@@ -20,7 +20,7 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Queries
         {
             var result = Fixture.Repository.Query(new SearchCardsQuery(string.Empty, string.Empty));
 
-            result.Count().ShouldBe(Fixture.Cards.Count());
+            result.Count().ShouldBe(4);
 
         }
     }

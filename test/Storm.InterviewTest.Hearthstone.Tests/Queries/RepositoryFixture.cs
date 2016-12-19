@@ -18,7 +18,8 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Queries
                     CreateRandomCardWithIdAndClass<MinionCard>("M1", "Mango"),
                     CreateRandomCardWithIdAndClass<MinionCard>("M2", "Apple"),
                     CreateRandomCardWithIdAndClass<SpellCard>("S1", "Kiwi"),
-                    CreateRandomCardWithIdAndClass<WeaponCard>("W1", "Mango")
+                    CreateRandomCardWithIdAndClass<WeaponCard>("W1", "Mango"),
+                    CreateRandomCardWithIdAndClass<HeroCard>("H1", "Hero")
                  };
             }
         }
