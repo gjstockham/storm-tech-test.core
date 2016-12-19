@@ -1,5 +1,6 @@
 
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Storm.InterviewTest.Hearthstone.Core.Domain;
 using Storm.InterviewTest.Hearthstone.Core.Services;
 using Storm.InterviewTest.Hearthstone.Models;
@@ -33,7 +34,8 @@ namespace Storm.InterviewTest.Hearthstone.Core.Mapping
 		    CreateMap<SpellCard, SpellModel>();
 
             CreateMap<HeroCard, HeroModel>()
-                .ForMember(x => x.PlayerClass, opt => opt.Ignore()); 
-	    }
+                .ForMember(x => x.PlayerClass, opt => opt.Ignore());
+
+		}
     }
 }

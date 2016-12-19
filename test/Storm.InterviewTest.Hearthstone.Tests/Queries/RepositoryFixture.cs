@@ -15,10 +15,10 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Queries
             {
                 return new[]
                 {
-                    CreateRandomCardWithId<MinionCard>("M1"),
-                    CreateRandomCardWithId<MinionCard>("M2"),
-                    CreateRandomCardWithId<SpellCard>("S1"),
-                    CreateRandomCardWithId<WeaponCard>("W1")
+                    CreateRandomCardWithIdAndClass<MinionCard>("M1", "Mango"),
+                    CreateRandomCardWithIdAndClass<MinionCard>("M2", "Apple"),
+                    CreateRandomCardWithIdAndClass<SpellCard>("S1", "Kiwi"),
+                    CreateRandomCardWithIdAndClass<WeaponCard>("W1", "Mango")
                  };
             }
         }
@@ -30,10 +30,11 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Queries
 
         }
 
-        private ICard CreateRandomCardWithId<T>(string id) where T : class, ICard
+        private ICard CreateRandomCardWithIdAndClass<T>(string id, string playerClass) where T : class, ICard
         {
             var randomCardWithId = Activator.CreateInstance(typeof(T), id) as T;
             randomCardWithId.Name = typeof(T).Name + " " + id;
+            randomCardWithId.PlayerClass = playerClass;
             return randomCardWithId;
         }
     }

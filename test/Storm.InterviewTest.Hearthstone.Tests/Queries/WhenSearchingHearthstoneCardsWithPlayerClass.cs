@@ -6,11 +6,11 @@ using Xunit;
 
 namespace Storm.InterviewTest.Hearthstone.Tests.Queries
 {
-    public class WhenSearchingHearthstoneCardsWithEmptyQuery : IClassFixture<RepositoryFixture>
+    public class WhenSearchingHearthstoneCardsWithPlayerClass : IClassFixture<RepositoryFixture>
     {
         public RepositoryFixture Fixture { get; }
 
-        public WhenSearchingHearthstoneCardsWithEmptyQuery(RepositoryFixture fixture)
+        public WhenSearchingHearthstoneCardsWithPlayerClass(RepositoryFixture fixture)
         {
             Fixture = fixture;
         }
@@ -18,9 +18,9 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Queries
         [Fact]
         public void ShouldReturnExpectedSearchResults()
         {
-            var result = Fixture.Repository.Query(new SearchCardsQuery(string.Empty, string.Empty));
+            var result = Fixture.Repository.Query(new SearchCardsQuery(string.Empty, "Mango"));
 
-            result.Count().ShouldBe(Fixture.Cards.Count());
+            result.Count().ShouldBe(2);
 
         }
     }

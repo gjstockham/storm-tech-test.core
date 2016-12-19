@@ -8,19 +8,28 @@ namespace Storm.InterviewTest.Hearthstone.Core.Queries
 {
 	public class SearchCardsQuery : CardListLinqQueryObject<ICard>
 	{
-		public string Q { get; protected set; }
+	    public string PlayerClass { get; }
+	    public string Q { get; }
 
-		public SearchCardsQuery(string q)
+		public SearchCardsQuery(string q, string playerClass)
 		{
-			Q = q ?? string.Empty;
+		    PlayerClass = playerClass;
+		    Q = q ?? string.Empty;
 		}
 
 		protected override IEnumerable<ICard> ExecuteLinq(IQueryable<ICard> queryOver)
 		{
-		    return queryOver.Where(x =>
+		    var query = queryOver.Where(x =>
 		        StringContains(x.Name)
 		        || StringContains(x.Type.ToString())
 		        || StringContains(x.PlayerClass));
+
+		    if (!String.IsNullOrEmpty(PlayerClass))
+		    {
+		        query = query.Where(x => x.PlayerClass == PlayerClass);
+		    }
+
+		    return query;
 		}
 
 	    private bool StringContains(string input)

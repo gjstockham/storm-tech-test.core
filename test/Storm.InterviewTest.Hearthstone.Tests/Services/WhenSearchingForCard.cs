@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -25,7 +26,7 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Services
         [Fact]
         public void ShouldReturnCorrectModel()
         {
-            var result = Fixture.CardSearchService.Search("my search term");
+            var result = Fixture.CardSearchService.Search("my search term", string.Empty);
 
             result.Count().ShouldBe(1);
             result.First().Id.ShouldBe("1");
@@ -35,7 +36,7 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Services
         [Fact]
         public void ShouldCreateCorrectQuery()
         {
-            var result = Fixture.CardSearchService.Search("my search term");
+            var result = Fixture.CardSearchService.Search("my search term", string.Empty);
 
             Fixture.Repository.Verify(x => x.Query(It.Is<SearchCardsQuery>(y => y.Q == "my search term")));
 

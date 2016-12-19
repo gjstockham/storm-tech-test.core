@@ -55,7 +55,7 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Queries
         public void FactMethodName()
         {
             var repo = new HearthstoneCardCache(Cards);
-            var result = repo.Query(new SearchCardsQuery("case"));
+            var result = repo.Query(new SearchCardsQuery("case", string.Empty));
 
             result.Count().ShouldBe(3);
             result.First().Name.ShouldBe("UPPER CASE");
