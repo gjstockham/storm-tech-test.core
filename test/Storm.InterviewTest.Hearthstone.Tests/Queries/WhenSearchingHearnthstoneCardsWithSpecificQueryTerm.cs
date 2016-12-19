@@ -18,11 +18,29 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Queries
             {
                 return new List<ICard>(Fixture.Cards)
                 {
-                    new MinionCard("99")
+                    new MinionCard("1")
                     {
-                        Name = "my special card",
+                        Name = "UPPER CASE",
                         Faction = FactionTypeOptions.Alliance,
                         Rarity = RarityTypeOptions.Legendary
+                    },
+                    new MinionCard("2")
+                    {
+                        Name = "Mixed Case",
+                        Faction = FactionTypeOptions.Horde,
+                        Rarity = RarityTypeOptions.Epic
+                    },
+                    new MinionCard("3")
+                    {
+                        Name = "Doesn't have the search term",
+                        Faction = FactionTypeOptions.Horde,
+                        Rarity = RarityTypeOptions.Epic
+                    },
+                    new MinionCard("4")
+                    {
+                        Name = "lower case",
+                        Faction = FactionTypeOptions.Neutral,
+                        Rarity = RarityTypeOptions.Free
                     }
                 };
             }
@@ -37,10 +55,11 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Queries
         public void FactMethodName()
         {
             var repo = new HearthstoneCardCache(Cards);
-            var result = repo.Query(new SearchCardsQuery("special"));
+            var result = repo.Query(new SearchCardsQuery("case"));
 
-            result.Count().ShouldBe(1);
-            result.First().Name.ShouldBe("my special card");
+            result.Count().ShouldBe(3);
+            result.First().Name.ShouldBe("UPPER CASE");
+            result.Last().Name.ShouldBe("lower case");
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Storm.InterviewTest.Hearthstone.Core.Domain;
@@ -16,7 +17,15 @@ namespace Storm.InterviewTest.Hearthstone.Core.Queries
 
 		protected override IEnumerable<ICard> ExecuteLinq(IQueryable<ICard> queryOver)
 		{
-			return queryOver.Where(x => x.Name.Contains(Q) || x.Type.ToString() == Q || x.PlayerClass == Q);
+		    return queryOver.Where(x =>
+		        StringContains(x.Name)
+		        || StringContains(x.Type.ToString())
+		        || StringContains(x.PlayerClass));
 		}
+
+	    private bool StringContains(string input)
+	    {
+	        return input?.IndexOf(Q, StringComparison.OrdinalIgnoreCase) >= 0;
+	    }
 	}
 }
