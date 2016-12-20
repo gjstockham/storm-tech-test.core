@@ -1,25 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Logging;
-using Storm.InterviewTest.Hearthstone.Core;
-using Storm.InterviewTest.Hearthstone.Core.Domain;
-using Storm.InterviewTest.Hearthstone.Core.Mapping;
 using Storm.InterviewTest.Hearthstone.Core.Services;
+using Storm.InterviewTest.Hearthstone.Data;
+using Storm.InterviewTest.Hearthstone.Data.Seed;
 
 namespace WebApplication
 {
     public class Startup
     {
-
-        private IHearthstoneCardCache cardCache;
 
         public Startup(IHostingEnvironment env)
         {
@@ -32,12 +25,14 @@ namespace WebApplication
             {
                 // For more details on using the user secret store see https://go.microsoft.com/fwlink/?LinkID=532709
                 builder.AddUserSecrets();
+
+                // Seed database if not done already
+
             }
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
 
-            cardCache = CardCacheConfig.BuildCardCache(env);
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -47,13 +42,12 @@ namespace WebApplication
         {
             services.AddMvc();
 
-            services.AddTransient<ICardSearchService, CardSearchService>();
-            services.AddSingleton<IHearthstoneCardCache>(cardCache);
-
             services.AddAutoMapper();
+            services.AddMediatR(typeof(Startup));
 
-            
-       }
+            services.AddScoped(_ => new HearthstoneDbContext());
+
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -65,6 +59,11 @@ namespace WebApplication
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
+
+                using (var serviceScope = app.ApplicationServices.CreateScope())
+                {
+                    serviceScope.ServiceProvider.GetService<HearthstoneDbContext>().EnsureSeedData();
+                }
             }
             else
             {

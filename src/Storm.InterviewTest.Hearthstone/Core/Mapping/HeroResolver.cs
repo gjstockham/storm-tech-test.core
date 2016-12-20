@@ -1,20 +1,20 @@
 
 using System;
+using System.Linq;
 using AutoMapper;
-using Storm.InterviewTest.Hearthstone.Core.Domain;
-using Storm.InterviewTest.Hearthstone.Core.Queries;
-using Storm.InterviewTest.Hearthstone.Core.Services;
-using Storm.InterviewTest.Hearthstone.Models;
+using Storm.InterviewTest.Hearthstone.Controllers.Cards.Models;
+using Storm.InterviewTest.Hearthstone.Data;
+using Storm.InterviewTest.Hearthstone.Data.Domain;
 
 namespace Storm.InterviewTest.Hearthstone.Core.Mapping
 {
     public class HeroResolver : IValueResolver<ICard, CardModel, HeroModel>
     {
-        private readonly IHearthstoneCardCache _repository;
+        private readonly HearthstoneDbContext _db;
 
-        public HeroResolver(IHearthstoneCardCache repository)
+        public HeroResolver(HearthstoneDbContext db)
         {
-            _repository = repository;
+            _db = db;
         }
 
         public HeroModel Resolve(ICard source, CardModel destination, HeroModel destMember, ResolutionContext context)
@@ -22,9 +22,11 @@ namespace Storm.InterviewTest.Hearthstone.Core.Mapping
             if (String.IsNullOrEmpty(source.PlayerClass))
                 return null;
 
-            var heroCard =  _repository.Query(new FindHeroCardQuery(source.PlayerClass));
+            var card =  _db.Cards
+                .FirstOrDefault(x => x.PlayerClass == source.PlayerClass && x.Id.StartsWith("HERO"));
 
-            
+            var heroCard = card as HeroCard;
+
             return heroCard == null ? null : context.Mapper.Map<HeroCard, HeroModel>(heroCard);
         }
     }

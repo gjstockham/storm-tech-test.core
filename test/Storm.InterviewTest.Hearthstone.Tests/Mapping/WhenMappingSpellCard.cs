@@ -1,5 +1,6 @@
 ﻿using Shouldly;
-using Storm.InterviewTest.Hearthstone.Core.Domain;
+using Storm.InterviewTest.Hearthstone.Controllers.Cards.Models;
+using Storm.InterviewTest.Hearthstone.Data.Domain;
 using Storm.InterviewTest.Hearthstone.Models;
 using Xunit;
 

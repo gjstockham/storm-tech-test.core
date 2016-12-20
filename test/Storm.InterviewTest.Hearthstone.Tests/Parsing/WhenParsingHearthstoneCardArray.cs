@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json.Linq;
 using Shouldly;
-using Storm.InterviewTest.Hearthstone.Core.Domain;
 using Storm.InterviewTest.Hearthstone.Core.Services;
+using Storm.InterviewTest.Hearthstone.Data.Domain;
 using Xunit;
 
 namespace Storm.InterviewTest.Hearthstone.Tests.Parsing
@@ -16,7 +15,7 @@ namespace Storm.InterviewTest.Hearthstone.Tests.Parsing
         protected Stream _cardStream;
         protected string _cardsData;
 
-        protected IHearthstoneCardParser _parser;
+        protected HearthstoneCardParser _parser;
 
         public WhenParsingHearthstoneCardArray()
         {
